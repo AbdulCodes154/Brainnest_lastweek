@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>calculator</title>
+  <style>
+
+    .calculator {
+      width: 400px;
+      height: 500px;
+      margin: 0 auto;
+      text-align: center;
+      background-color: #ddd;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .display {
+      background-color: white;
+      height: 100px;
+      width: 100%;
+      border: 1px solid black;
+      border-radius: 10px;
+      font-size: 48px;
+      padding: 20px;
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .key {
+      background-color: white;
+      border: 1px solid black;
+      border-radius: 10px;
+      width: 70px;
+      height: 70px;
+      margin: 10px;
+      float: left;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .operator {
+      background-color: orange;
+      color: white;
+    }
+    .clear {
+      clear: both;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display"></div>
+    <div class="key" id="seven">7</div>
+    <div class="key" id="eight">8</div>
+    <div class="key" id="nine">9</div>
+    <div class="key operator" id="add">+</div>
+    <div class="key" id="four">4</div>
+    <div class="key" id="five">5</div>
+    <div class="key" id="six">6</div>
+    <div class="key operator" id="subtract">-</div>
+    <div class="key" id="one">1</div>
+    <div class="key" id="two">2</div>
+    <div class="key" id="three">3</div>
+    <div class="key operator" id="multiply">*</div>
+    <div class="key" id="zero">0</div>
+    <div class="key" id="decimal">.</div>
+    <div class="key operator" id="divide">/</div>
+    <div class="key operator" id="equals">=</div>
+    <div class="clear"></div>
+    <div class="key operator" id="clear">Clear</div>
+  </div>
+  <script>
+
+const display = document.querySelector("#display");
+const keys = document.querySelectorAll(".key");
+let displayValue = "";
+
+keys.forEach(key => {
+  key.addEventListener("click", () => {
+    if (key.id === "clear") {
+      displayValue = "";
+      display.textContent = displayValue;
+    } else if (key.id === "equals") {
+      if (isValidExpression(displayValue)) {
+        displayValue = eval(displayValue);
+        displayValue = Number(displayValue).toFixed(5);
+        display.textContent = displayValue;
+      } else {
+        displayValue = "Invalid expression.";
+        display.textContent = displayValue;
+      }
+    } else {
+      displayValue += key.textContent;
+      display.textContent = displayValue;
+    }
+  });
+});
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    return "Cannot divide by 0.";
+  }
+  return a / b;
+}
+
+function isValidExpression(expression) {
+  const validChars = "0123456789+-*/.";
+  for (let i = 0; i < expression.length; i++) {
+    if (!validChars.includes(expression[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+  </script>
+</body>
+</html>
